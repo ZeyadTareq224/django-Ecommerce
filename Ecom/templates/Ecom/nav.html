@@ -4,7 +4,7 @@
 
       <!-- Brand -->
       <a class="navbar-brand waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
-        <strong class="blue-text">MDB</strong>
+        <strong class="blue-text">DjEcommerce</strong>
       </a>
 
       <!-- Collapse -->
@@ -31,6 +31,7 @@
 
         <!-- Right -->
         <ul class="navbar-nav nav-flex-icons">
+          {% if request.user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link waves-effect">
               <span class="badge red z-depth-1 mr-1"> {{total_quantity}} </span>
@@ -38,7 +39,23 @@
               <span class="clearfix d-none d-sm-inline-block"> Cart </span>
             </a>
           </li>
-          
+          <li class="nav-item">
+            <a href="{% url 'account_logout' %}" class="nav-link waves-effect">
+              Logout
+            </a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a href="{% url 'account_login' %}" class="nav-link waves-effect">
+              Login
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'account_signup' %}" class="nav-link waves-effect">
+              Signup
+            </a>
+          </li>
+          {% endif %}
           
         </ul>
 
