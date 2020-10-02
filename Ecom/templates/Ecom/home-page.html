@@ -54,22 +54,7 @@
           <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
 
             <!-- Content -->
-            <div class="text-center white-text mx-5 wow fadeIn">
-              <h1 class="mb-4">
-                <strong>Ecommerce</strong>
-              </h1>
-
-              <p>
-                <strong>Best & affordable products for any age.</strong>
-              </p>
-
-              
-
-              <a target="_blank" href="#" class="btn btn-outline-white btn-lg">
-                Learn More
-                <i class="fas fa-graduation-cap ml-2"></i>
-              </a>
-            </div>
+            
             <!-- Content -->
 
           </div>
@@ -103,26 +88,7 @@
           <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
 
             <!-- Content -->
-            <div class="text-center white-text mx-5 wow fadeIn">
-              <h1 class="mb-4">
-                <strong>Learn Bootstrap 4 with MDB</strong>
-              </h1>
-
-              <p>
-                <strong>Best & free guide of responsive web design</strong>
-              </p>
-
-              <p class="mb-4 d-none d-md-block">
-                <strong>The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and
-                  written versions
-                  available. Create your own, stunning website.</strong>
-              </p>
-
-              <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">Start
-                free tutorial
-                <i class="fas fa-graduation-cap ml-2"></i>
-              </a>
-            </div>
+            
             <!-- Content -->
 
           </div>
@@ -214,7 +180,7 @@
               <div class="view overlay">
                 <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top"
                   alt="">
-                <a>
+                <a href="{% url 'products_details' item.id %}">
                   <div class="mask rgba-white-slight"></div>
                 </a>
               </div>
@@ -223,15 +189,13 @@
               <!--Card content-->
               <div class="card-body text-center">
                 <!--Category & Title-->
-                <a href="{% url 'products_details' item.id %}" class="grey-text">
-                  <h5>{{item.category}}</h5>
-                </a>
+                
+                  <h5 class="grey-text">{{item.category}}</h5>
+                
                 <h5>
-                  <strong>
-                    <a href="{% url 'products_details' item.id %}" class="dark-grey-text">{{item.title}}
+                  <strong class="dark-grey-text">
+                      {{item.title}}
                       <span class="badge badge-pill {{item.label}}-color">{{item.item_state}}</span>
-                    
-                    </a>
                   </strong>
                 </h5>
                  {% if item.discount_price %}

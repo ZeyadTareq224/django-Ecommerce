@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'Ecom',
 
     'crispy_forms',
+
+    'django_countries',
 ]
 
 MIDDLEWARE = [

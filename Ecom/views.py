@@ -1,11 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Item, Order, OrderItem
+from .models import Item, Order, OrderItem, BillingAddress
 from django.contrib import messages
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import CheckoutForm
+
+
+
 class HomeView(ListView):
     model = Item
     template_name = 'Ecom/home-page.html'
@@ -28,10 +32,50 @@ class OrderSummaryVeiw(LoginRequiredMixin, View):
             messages.error(self.request, "You don't have an active order")
             return redirect('/')
 
-def checkout(request):
+class CheckoutView(View):
+    def get(self, *args, **kwargs):
+        form = CheckoutForm()
+        order = Order.objects.get(user=self.request.user, ordered=False)
+        context = {
+        'object': order,
+        'form': form
+        }
+        return render(self.request, 'Ecom/checkout-page.html', context)
 
-	context = {}
-	return render(request, 'Ecom/checkout-page.html', context)
+    def post(self, *args, **kwargs):
+        form = CheckoutForm(self.request.POST or None)
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            if form.is_valid():
+                street_address = form.cleaned_data.get('street_address')
+                appartment_address = form.cleaned_data.get('appartment_address')
+                country = form.cleaned_data.get('country')
+                zipcode = form.cleaned_data.get('zipcode')
+
+                #add functionality later
+                #same_shipping_address = form.cleaned_data.get('same_shipping_address')
+                #save_info = form.cleaned_data.get('save_info')
+
+                payment_option = form.cleaned_data.get('payment_option')
+
+                billing_address = BillingAddress(
+                    user = self.request.user,
+                    street_address = street_address,
+                    appartment_address = appartment_address,
+                    country = country,
+                    zipcode = zipcode
+                    )
+                billing_address.save()
+                order.billing_address = billing_address
+                order.save()
+
+                # Add redirect to the selected payment option
+
+                return redirect('checkout')
+            messages.warning(self.request, "Checkout incomplete")
+            return redirect('checkout')
+        except ObjectDoesNotExist:
+            messages.error(self.request, "You don't have an active order")    
 
 
 @login_required
