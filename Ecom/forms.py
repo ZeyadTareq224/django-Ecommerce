@@ -8,18 +8,19 @@ PAYMENT_CHOICES = (
 	('P', 'PayPal'),
 	)
 class CheckoutForm(forms.Form):
-	street_address = forms.CharField(widget=forms.TextInput(attrs={
+    street_address = forms.CharField(widget=forms.TextInput(attrs={
 		'placeholder': '1234 Main St'
 		}))
-	appartment_address = forms.CharField(required=False, widget=forms.TextInput(attrs={
-		'placeholder': 'Apartment or suite'
-		}))
-	country = CountryField(blank_label='(select country)').formfield(widget=CountrySelectWidget(attrs={
+
+    country = CountryField(blank_label='(select country)').formfield(widget=CountrySelectWidget(attrs={
 		'class': 'custom-select d-block w-100'
 		}))
-	zipcode = forms.CharField(widget=forms.TextInput(attrs={
+    city = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'City'
+    }))
+
+    zipcode = forms.CharField(widget=forms.TextInput(attrs={
 		'class':'form-control'
 		}))
-	same_shipping_address = forms.BooleanField(widget=forms.CheckboxInput(), required=False)
-	save_info = forms.BooleanField(widget=forms.CheckboxInput(), required=False)
-	payment_option = forms.ChoiceField(widget=forms.RadioSelect(), choices=PAYMENT_CHOICES)
+    phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+

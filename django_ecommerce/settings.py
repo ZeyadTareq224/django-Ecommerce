@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'crispy_forms',
 
     'django_countries',
+    'phonenumber_field',
+
 ]
 
 MIDDLEWARE = [
@@ -133,11 +135,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '/static/img')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/img/'
 
 
 # Auth
@@ -153,3 +158,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL='/'
 LOGOUT_REDIRECT_URL='/accounts/login'
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51HXttsEloC9PD6i9XItsZN3Y0Hc3ZexMSBEVv7F8gjM9bibM3n4tuB8fK7R0gDjAHnq0tGG1iobAdZMNyqHqcCqP004XwfwlDQ'
+STRIPE_SECRET_KEY = 'sk_test_51HXttsEloC9PD6i9xCd7iAsKbOQ75NJ6qBPX9zUAmImxRIYuJLKEjsTuoO7w65A7bGg16nwV4G6yow7M3XhjwYFi00xgpx5Il9'

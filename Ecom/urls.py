@@ -9,5 +9,8 @@ urlpatterns = [
 	path('add_to_cart/<int:id>', views.add_to_cart, name='add_to_cart'),
 	path('remove_from_cart/<int:id>', views.remove_from_cart, name='remove_from_cart'),
 	path('remove_single_item_from_cart/<int:id>', views.remove_single_item_from_cart, name='remove_single_item_from_cart'),
-	
+	path('payment/', views.PaymentView.as_view(), name='payment'),
+	path("create-payment-intent", views.createpayment, name="create-payment-intent"),
+	path("payment-complete", views.paymentcomplete, name="payment-complete"),
+
 ]

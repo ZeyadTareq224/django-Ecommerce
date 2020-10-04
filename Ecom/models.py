@@ -18,6 +18,7 @@ ITEM_STATE_CHOICES = (
 	('New', 'N'),
 	('Bestseller', 'BS'),
 	)
+
 class Item(models.Model):
 	title = models.CharField(max_length=100,null=True, blank=True)
 	price = models.FloatField(null=True, blank=True)
@@ -26,13 +27,14 @@ class Item(models.Model):
 	description = models.TextField(null=True, blank=True)
 	item_state = models.CharField(choices=ITEM_STATE_CHOICES , max_length=10,null=True, blank=True)
 	discount_price = models.IntegerField(null=True, blank=True)
+	image = models.ImageField(upload_to='item_images')
 
 	def __str__(self):
 		return self.title
 
 class OrderItem(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
-	item = models.ForeignKey(Item,on_delete=models.CASCADE,null=True, blank=True)
+	item = models.ForeignKey(Item, on_delete=models.CASCADE,null=True, blank=True)
 	quantity = models.IntegerField(default=1,null=True, blank=True)
 	ordered = models.BooleanField(default=False)
 
@@ -60,7 +62,7 @@ class Order(models.Model):
 	start_date = models.DateTimeField(auto_now_add=True)
 	ordered = models.BooleanField(default=False,null=True, blank=True)
 	ordered_date = models.DateTimeField()
-	billing_address = models.ForeignKey('BillingAddress', on_delete=models.SET_NULL, null=True, blank=True)
+	shipping_details = models.ForeignKey('ShippingAddress', on_delete=models.SET_NULL, null=True, blank=True)
 	def __str__(self):
 		return self.user.username
 
@@ -71,12 +73,12 @@ class Order(models.Model):
 		return total
 
 
-class BillingAddress(models.Model):
+class ShippingAddress(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
 	street_address = models.CharField(max_length=100,null=True, blank=True)
-	appartment_address = models.CharField(max_length=100,null=True, blank=True)
 	country = CountryField(multiple=False)
+	city = models.CharField(max_length=50)
+	phone_number = models.CharField(max_length=20, blank=True)
 	zipcode = models.CharField(max_length=100)
-
 	def __str__(self):
 		return self.user.username
