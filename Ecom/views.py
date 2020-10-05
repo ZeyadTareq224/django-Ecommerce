@@ -33,6 +33,7 @@ class ItemDetailView(DetailView):
     template_name = 'Ecom/product-page.html'
 
 
+
 class OrderSummaryVeiw(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
@@ -41,7 +42,7 @@ class OrderSummaryVeiw(LoginRequiredMixin, View):
             return render(self.request, 'Ecom/order_summary.html', context)
 
         except ObjectDoesNotExist:
-            messages.error(self.request, "You don't have an active order")
+            messages.warning(self.request, "You don't have an active order, add something to your cart first to be able to see your cart details")
             return redirect('/')
 
 
@@ -160,9 +161,18 @@ def remove_from_cart(request, id):
                 ordered=False
             )[0]
             order.items.remove(order_item)
-            order_item.delete()
-            messages.info(request, "This item was removed from your cart.")
+            if order.get_total() == 0:
+                order.delete()
+                messages.info(request, "Your order was canceled")
+                return redirect("products_details", pk=id)
+            else:
+                order_item.delete()
+                messages.info(request, "This item was removed from your cart.")
             return redirect("order-summary")
+        if order.get_total() == 0:
+            order.delete()
+            messages.info(request, "Your order was canceled")
+            return redirect("products_details", pk=id)
         else:
             messages.info(request, "This item was not in your cart")
             return redirect("products_details", pk=id)
@@ -191,9 +201,15 @@ def remove_single_item_from_cart(request, id):
                 order_item.save()
             else:
                 order.items.remove(order_item)
+                if order.items.all().count() == 0:
+                    order.delete()
+                    messages.info(request, "Your order was canceled")
+                    return redirect("products_list")
+
 
             messages.info(request, "This item quantity was updated.")
             return redirect("order-summary")
+
         else:
             messages.info(request, "This item was not in your cart")
             return redirect("products_details", pk=id)
