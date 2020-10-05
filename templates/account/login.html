@@ -16,19 +16,11 @@
           {% get_providers as socialaccount_providers %}
 
           {% if socialaccount_providers %}
-          <p>{% blocktrans with site.name as site_name %}Please sign in with one
-          of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+          <p>{% blocktrans with site.name as site_name %}You can sign in with one
+          of your existing social accounts.
           for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 
-          <div class="socialaccount_ballot">
 
-            <ul class="socialaccount_providers">
-              {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-            </ul>
-
-            <div class="login-or">{% trans 'or' %}</div>
-
-          </div>
 
           {% include "socialaccount/snippets/login_extra.html" %}
 
@@ -46,6 +38,18 @@
             <a class="btn btn-default" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
             <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
           </form>
+            <p>
+              Dont have an account ?
+              <a href="{{ signup_url }}">sign up</a>
+              <br>
+              Or you can login with your social media accounts
+            </p>
+            <div class="socialaccount_ballot">
+              <ul>
+                <div style="background-color:#3B5998;" class="fb btn"><li style="color:white;" class="fa fa-facebook"><a style="color:white;" class="m-1" href="{% provider_login_url "facebook" method="js_sdk" %}">Facebook</a></li></div>
+                <div style="background-color:#dd4b39;" class="google btn"><li style="color:white;" class="fa fa-google"><a style="color:white;" class="m-1" href="{% provider_login_url "facebook" method="js_sdk" %}">Google</a></li></div>
+              </ul>
+            </div>
           </div>
         </div>
       </section>

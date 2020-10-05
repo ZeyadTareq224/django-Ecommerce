@@ -51,6 +51,10 @@ INSTALLED_APPS = [
     'django_countries',
     'phonenumber_field',
 
+    #social providers
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+
 ]
 
 MIDDLEWARE = [
@@ -151,13 +155,23 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
-
-SITE_ID = 1
-
+#crispy forms configurations
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL='/'
-LOGOUT_REDIRECT_URL='/accounts/login'
 
+# Allauth configurations
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 3
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_LOGOUT_ON_GET = False
+
+#Stripe configurations
 STRIPE_PUBLISHABLE_KEY = 'pk_test_51HXttsEloC9PD6i9XItsZN3Y0Hc3ZexMSBEVv7F8gjM9bibM3n4tuB8fK7R0gDjAHnq0tGG1iobAdZMNyqHqcCqP004XwfwlDQ'
 STRIPE_SECRET_KEY = 'sk_test_51HXttsEloC9PD6i9xCd7iAsKbOQ75NJ6qBPX9zUAmImxRIYuJLKEjsTuoO7w65A7bGg16nwV4G6yow7M3XhjwYFi00xgpx5Il9'
