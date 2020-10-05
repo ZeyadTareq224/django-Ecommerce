@@ -3,6 +3,12 @@ from django.conf import settings
 from django_countries.fields import CountryField
 
 CATEGORY_CHOICES = (
+	('Electronics', 'E'),
+	('Head Wears', 'HW'),
+	('Foot Wear', 'FW'),
+	('Development', 'DEV'),
+	('Head Wears', 'HW'),
+	('Books & Novels', 'BN'),
 	('Shirts', 'SH'),
 	('Sport Wears', 'SW'),
 	('Out Wears', 'OW')
@@ -22,7 +28,7 @@ ITEM_STATE_CHOICES = (
 class Item(models.Model):
 	title = models.CharField(max_length=100,null=True, blank=True)
 	price = models.FloatField(null=True, blank=True)
-	category = models.CharField(choices=CATEGORY_CHOICES, max_length=12,null=True, blank=True)
+	category = models.CharField(choices=CATEGORY_CHOICES, max_length=15,null=True, blank=True)
 	label = models.CharField(choices=LABEL_CHOICES, max_length=10,null=True, blank=True)
 	description = models.TextField(null=True, blank=True)
 	item_state = models.CharField(choices=ITEM_STATE_CHOICES , max_length=10,null=True, blank=True)

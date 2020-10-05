@@ -33,11 +33,15 @@
               <span class="clearfix d-none d-sm-inline-block"> Cart </span>
             </a>
           </li>
+
           <li class="nav-item">
             <a href="{% url 'account_logout' %}" class="nav-link waves-effect">
               Logout
             </a>
           </li>
+
+          <p class="mr-2 mt-2">Hello <b>{{request.user}}</b></p>
+
           {% else %}
           <li class="nav-item">
             <a href="{% url 'account_login' %}" class="nav-link waves-effect">
@@ -49,6 +53,7 @@
               Signup
             </a>
           </li>
+
           {% endif %}
           
         </ul>

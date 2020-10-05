@@ -25,7 +25,7 @@ import stripe
 class HomeView(ListView):
     model = Item
     template_name = 'Ecom/home-page.html'
-    paginate_by = 10
+    paginate_by = 8
 
 
 class ItemDetailView(DetailView):
